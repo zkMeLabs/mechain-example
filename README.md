@@ -5,3 +5,4 @@
 * `npm install @bnb-chain/reed-solomon`
 * `npm install mime-types`
 * `npm install fs-extra`
+* `node index.js`
