@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@bnb-chain/reed-solomon": "^1.1.3",
-    "@zkmelabs/storage-sdk-js": "^0.0.1",
+    "@zkmelabs/storage-sdk-js": "^0.0.3",
     "ethers": "^6.13.4",
     "fs-extra": "^11.2.0",
     "mechain-precompile": "github:zkMeLabs/mechain-precompile",

@@ -1,20 +1,20 @@
-import { ethers } from 'ethers';
+import {ethers} from 'ethers';
 import path from 'path';
 import fs from 'fs-extra';
-import storageArtifact from 'mechain-precompile/storage/IStorage.json' assert { type: 'json' };
-import { Storage } from '@zkmelabs/storage-sdk-js';
-import { lookup } from 'mime-types';
-import { ReedSolomon } from '@bnb-chain/reed-solomon';
+import storageArtifact from 'mechain-precompile/storage/IStorage.json' assert {type: 'json'};
+import {Storage} from '@zkmelabs/storage-sdk-js';
+import {lookup} from 'mime-types';
+import {ReedSolomon} from '@bnb-chain/reed-solomon';
 
 export const main = async () => {
   try {
-    const now = '1731735336005' || new Date().getTime();
+    const now = '1731920659' || new Date().getTime();
 
     // PLEASE UPDATE YOU DATA BELOW
-    const privateKey = '3554368e93208a8fe6c67b94d18a9aeaa1ae006b2815b753b08620a788128232';
-    const rpc = 'http://testnet-rpc.mechain.tech:80';
+    const rpc = 'https://testnet-rpc.mechain.tech:443';
     const storageAddress = '0x0000000000000000000000000000000000002001';
     const primarySpAddress = '0x1Ba86D47193Ad486d9839c7d4ee561c0C33ca184';
+    const privateKey = 'f78a036930ce63791ea6ea20072986d8c3f16a6811f6a2583b0787c45086f769';
     const bucketName = 'mechain' + now;
     const objectName = 'zkme' + now;
     const filePath = path.join('./test.txt');
