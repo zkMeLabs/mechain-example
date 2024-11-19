@@ -1,23 +1,24 @@
-import {ethers} from 'ethers';
-import path from 'path';
-import fs from 'fs-extra';
-import storageArtifact from 'mechain-precompile/storage/IStorage.json' assert {type: 'json'};
-import {Storage} from '@zkmelabs/storage-sdk-js';
-import {lookup} from 'mime-types';
-import {ReedSolomon} from '@bnb-chain/reed-solomon';
+import { ethers } from "ethers";
+import path from "path";
+import fs from "fs-extra";
+import storageArtifact from "mechain-precompile/storage/IStorage.json" assert { type: "json" };
+import { Storage } from "@zkmelabs/storage-sdk-js";
+import { lookup } from "mime-types";
+import { ReedSolomon } from "@bnb-chain/reed-solomon";
 
 export const main = async () => {
   try {
-    const now = '1731920659' || new Date().getTime();
+    const now = new Date().getTime();
 
     // PLEASE UPDATE YOU DATA BELOW
-    const rpc = 'https://testnet-rpc.mechain.tech:443';
-    const storageAddress = '0x0000000000000000000000000000000000002001';
-    const primarySpAddress = '0x1Ba86D47193Ad486d9839c7d4ee561c0C33ca184';
-    const privateKey = 'f78a036930ce63791ea6ea20072986d8c3f16a6811f6a2583b0787c45086f769';
-    const bucketName = 'mechain' + now;
-    const objectName = 'zkme' + now;
-    const filePath = path.join('./test.txt');
+    const rpc = "https://testnet-rpc.mechain.tech:443";
+    const storageAddress = "0x0000000000000000000000000000000000002001";
+    const primarySpAddress = "0x1Ba86D47193Ad486d9839c7d4ee561c0C33ca184";
+    const privateKey =
+      "f78a036930ce63791ea6ea20072986d8c3f16a6811f6a2583b0787c45086f769";
+    const bucketName = "mechain" + now;
+    const objectName = "zkme" + now;
+    const filePath = path.join("./test.txt");
 
     const fileBuffer = fs.readFileSync(filePath);
     const { abi } = storageArtifact;
@@ -33,8 +34,8 @@ export const main = async () => {
       find = false;
       try {
         const [bucketInfo, extraInfo] = await storage.headBucket(bucketName);
-        console.log('bucket:', bucketInfo.toObject(true));
-        console.log('extraInfo:', extraInfo.toObject(true));
+        console.log("bucket:", bucketInfo.toObject(true));
+        console.log("extraInfo:", extraInfo.toObject(true));
         find = true;
       } catch (error) {
         find = false;
@@ -48,19 +49,26 @@ export const main = async () => {
       const approval = {
         expiredHeight: 0,
         globalVirtualGroupFamilyId: 1,
-        sig: '0x00',
+        sig: "0x00",
       };
-      const chargedReadQuota = '100000000000000';
-      const tx = await storage.createBucket(bucketName, visibility, paymentAddress, primarySpAddress, approval, chargedReadQuota);
+      const chargedReadQuota = "100000000000000";
+      const tx = await storage.createBucket(
+        bucketName,
+        visibility,
+        paymentAddress,
+        primarySpAddress,
+        approval,
+        chargedReadQuota
+      );
       const receipt = await tx.wait();
-      console.log('create bucket success, receipt: ', receipt);
+      console.log("create bucket success, receipt: ", receipt);
     }
 
     // query object
     {
       find = false;
       const pageRequest = {
-        key: '0x00',
+        key: "0x00",
         offset: 0,
         limit: 100,
         countTotal: false,
@@ -69,8 +77,11 @@ export const main = async () => {
 
       const [objects, _] = await storage.listObjects(pageRequest, bucketName);
       for (const object of objects) {
-        if (object.bucketName === bucketName && object.objectName === objectName) {
-          console.log('object', object.toObject(true));
+        if (
+          object.bucketName === bucketName &&
+          object.objectName === objectName
+        ) {
+          console.log("object", object.toObject(true));
           find = true;
           break;
         }
@@ -93,14 +104,23 @@ export const main = async () => {
       const approval = {
         expiredHeight: 0,
         globalVirtualGroupFamilyId: 1,
-        sig: '0x00',
+        sig: "0x00",
       };
       const expectChecksums = rs.encode(Uint8Array.from(fileBuffer));
       const redundancyType = 0;
       const storage = new ethers.Contract(storageAddress, abi, wallet);
-      const tx = await storage.createObject(bucketName, objectName, payloadSize, visibility, contentType, approval, expectChecksums, redundancyType);
+      const tx = await storage.createObject(
+        bucketName,
+        objectName,
+        payloadSize,
+        visibility,
+        contentType,
+        approval,
+        expectChecksums,
+        redundancyType
+      );
       const receipt = await tx.wait();
-      console.log('create object success, receipt: ', receipt);
+      console.log("create object success, receipt: ", receipt);
     }
 
     // upload file
@@ -113,7 +133,7 @@ export const main = async () => {
           body: fileBuffer,
         },
         {
-          type: 'ECDSA',
+          type: "ECDSA",
           privateKey,
         }
       );
@@ -124,7 +144,7 @@ export const main = async () => {
           objectName,
         },
         {
-          type: 'ECDSA',
+          type: "ECDSA",
           privateKey,
         }
       );
@@ -132,7 +152,7 @@ export const main = async () => {
       console.log(data);
     }
   } catch (error) {
-    console.log('error', error);
+    console.log("error", error);
   }
 };
 
