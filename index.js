@@ -14,8 +14,7 @@ export const main = async () => {
     const rpc = "https://testnet-rpc.mechain.tech:443";
     const storageAddress = "0x0000000000000000000000000000000000002001";
     const primarySpAddress = "0x1Ba86D47193Ad486d9839c7d4ee561c0C33ca184";
-    const privateKey =
-      "f78a036930ce63791ea6ea20072986d8c3f16a6811f6a2583b0787c45086f769";
+    const privateKey = ""; // use your private key
     const bucketName = "mechain" + now;
     const objectName = "zkme" + now;
     const filePath = path.join("./test.txt");

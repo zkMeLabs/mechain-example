@@ -1,8 +1,4 @@
 # Step
-* `npm install @zkmelabs/storage-sdk-js`
-* `npm install git+https://github.com/zkMeLabs/mechain-precompile.git`
-* `npm install ethers`
-* `npm install @bnb-chain/reed-solomon`
-* `npm install mime-types`
-* `npm install fs-extra`
-* `node index.js`
+
+1. `npm install`
+2. change privateKey in index.js to your own private key, and  run `node index.js`
